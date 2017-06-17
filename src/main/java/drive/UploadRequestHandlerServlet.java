@@ -5,8 +5,12 @@
  */
 package drive;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import javax.servlet.ServletException;
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.GoogleApiTokenInfo;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.HttpResponseException;
 
@@ -24,9 +29,9 @@ import org.apache.http.client.HttpResponseException;
  */
 @WebServlet(name = "TestingServlet", urlPatterns =
 {
-    "/TestingServlet"
+    "/drive/submit_upload_url"
 })
-public class TestingServlet extends HttpServlet
+public class UploadRequestHandlerServlet extends HttpServlet
 {
 
     /**
@@ -40,7 +45,7 @@ public class TestingServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException
     {
-	response.setContentType("text/html;charset=UTF-8");
+	response.setContentType("application/json;charset=UTF-8");
 	try (PrintWriter out = response.getWriter())
 	{
 	    GoogleApiTokenInfo tokenInfo = (GoogleApiTokenInfo) request.getSession().getAttribute("token");
@@ -52,8 +57,29 @@ public class TestingServlet extends HttpServlet
 	    }
 
 	    String errorMessage = null;
-	    URL url = new URL(request.getParameter("url"));
-	    String fileName = request.getParameter("filename");
+	    URL url;
+	    String fileName;
+
+	    try
+	    {
+		fileName = request.getParameter("filename");
+		String urlString = request.getParameter("url");
+
+		if (fileName == null)
+		{
+		    url = new URL(urlString);
+		    fileName = FilenameUtils.getName(url.getPath());
+		}
+
+		urlString = urlString.replaceAll(" ", "%20");
+		url = new URL(urlString);
+	    }
+	    catch (MalformedURLException e)
+	    {
+		log(getServletInfo(), e);
+		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "URL is invalid.");
+		return;
+	    }
 
 	    DriveUploader uploader;
 
@@ -65,6 +91,10 @@ public class TestingServlet extends HttpServlet
 	    try
 	    {
 		uploader.init();
+	    }
+	    catch (FileNotFoundException ex)
+	    {
+		errorMessage = "404 Not found";
 	    }
 	    catch (NoHttpResponseException ex)
 	    {
@@ -80,15 +110,22 @@ public class TestingServlet extends HttpServlet
 	    }
 	    catch (IOException ex)
 	    {
+		log(getServletName(), ex);
 		errorMessage = "ErrorMessage: " + ex.getLocalizedMessage();
 	    }
 
 	    String id = UploadManager.getUploadManager().add(uploader);
 
+	    ObjectMapper mapper = new ObjectMapper();
+	    ObjectNode rootNode = mapper.createObjectNode();
+
 	    if (errorMessage != null)
-		out.print(errorMessage);
+		rootNode.put("error", errorMessage);
 	    else
-		out.print("Successfully Submitted! id = " + id);
+		rootNode.put("id", id);
+
+	    out.print(rootNode.toString());
+	    response.setStatus(HttpServletResponse.SC_ACCEPTED);
 	}
     }
 
