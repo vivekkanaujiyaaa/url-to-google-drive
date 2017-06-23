@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
-<t:ui_layout title="Save2Drive - Home">
+<t:ui_layout title="Save2Drive - About">
     
     <jsp:attribute name="head_area">
         

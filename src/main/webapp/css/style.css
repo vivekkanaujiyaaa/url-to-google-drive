@@ -276,4 +276,22 @@ buttons {
   text-decoration: none;
 }
 
+@media screen and (max-width: 767px)
+{
+    #aditya-card
+    {
+        margin-top : 10%;
+    }
+}
 
+@media screen and (min-width: 768px)
+{
+    #dhaval-content
+    {
+        padding-bottom : 4%;
+    }
+    #aditya-content
+    {
+        padding-bottom : 4%;
+    }
+}
