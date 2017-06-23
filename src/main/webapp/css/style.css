@@ -295,3 +295,15 @@ buttons {
         padding-bottom : 4%;
     }
 }
+
+#about-content
+{
+    margin-top: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+article + article
+{
+       margin-top: 4%;
+}

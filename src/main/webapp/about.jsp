@@ -20,19 +20,22 @@
             </div>
         </div>
         <br/>
-        <div class="mui-row">
-                <p>With this app, you shall be able to download a file from URL <b>directly</b> to Google Drive.</p>
-                <p>Tired of saving downloads to your PC? One solution is to save them on a cloud storage like Google Drive or Dropbox.</p>
-                <p>But, what about uploading them to your drive? You would waste your bandwidth for 2 operations - Download & Upload.</p>
-                <p>We understand your concern. So, we created <b><em>Save2Drive</em></b>. A simple webapp solution for saving your bandwidth!</p>
-        </div>
-        <div class="mui-row">
-            <p>You just have to follow these steps : </p>
-            <ol>
-                <li><a href="/OAuth2/OAuthRedirectServlet">Authorize our app</a> to let us upload the file</li>
-                <li>Next, paste the download URL of the file</li>
-                <li>Then relax, while we save your file to Google Drive</li>
-            </ol>
+        <div id="about-content">
+            <div class="mui-row">
+                <article>
+                    With this app, you shall be able to download a file from URL <b>directly</b> to Google Drive.
+                    Tired of saving downloads to your PC? One solution is to save them on a cloud storage like Google Drive or Dropbox.
+                    But, what about uploading them to your drive? You would waste your bandwidth for 2 operations - Download & Upload.
+                    We understand your concern. So, we created <b><em>Save2Drive</em></b>. A simple webapp solution for saving your bandwidth!
+                </article>
+                <article>You just have to follow these steps :
+                    <ol>
+                        <li><a href="/OAuth2/OAuthRedirectServlet">Authorize our app</a> to let us upload the file</li>
+                        <li>Next, paste the download URL of the file</li>
+                        <li>Then relax, while we save your file to Google Drive</li>
+                    </ol>
+                </article>
+            </div>
         </div>
         
     </jsp:attribute>
