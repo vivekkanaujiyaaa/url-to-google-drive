@@ -45,7 +45,7 @@ public class ResumableDriveUploader extends DriveUploader {
 
                 long startTime = System.currentTimeMillis();
                 byte[] buffer = downloadPartially(start, end);
-                uploadPartially(buffer, start, end);
+                //uploadPartially(buffer, start, end);
                 long endTime = System.currentTimeMillis();
 
                 uploadInformation.setUploadedSize(end + 1);
