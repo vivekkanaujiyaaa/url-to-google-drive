@@ -56,9 +56,9 @@ public class GoogleOauthController {
 	private final static String RESPONSE_TYPE = "code";
 	private final static String SCOPE = "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
 	private final static String GRANT_TYPE = "authorization_code";
-	private final static String CLIENT_ID = System.getenv("client_id");
-	private final static String CLIENT_SECRET = System.getenv("client_secret");
-	private final static String REDIRECT_URI = System.getenv("redirect_uri");
+	private final static String CLIENT_ID = System.getenv("722305518130-5orje3abb04tfduf57nt0573h0pt51de.apps.googleusercontent.com");
+	private final static String CLIENT_SECRET = System.getenv("FC8wHtTbYcgRGCib5eIUptUy");
+	private final static String REDIRECT_URI = System.getenv("https://url2drive.herokuapp.com/api/oauth/google/callback");
 	private final static Gson gson = new GsonBuilder()
 			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 	private final HttpSession session;
